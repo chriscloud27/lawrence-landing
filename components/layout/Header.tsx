@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MobileMenu from "@/components/layout/MobileMenu";
 import { buttonClasses } from "@/components/ui/button";
 import { SITE_CONFIG } from "@/lib/site-config";
 
@@ -39,34 +40,7 @@ export default function Header() {
             Start free
           </a>
 
-          {/* Mobile menu: native <details>, so it works without JavaScript. */}
-          <details className="group relative md:hidden">
-            <summary className="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-lw border border-line [&::-webkit-details-marker]:hidden">
-              <span className="sr-only">Menu</span>
-              <span aria-hidden className="flex flex-col gap-1">
-                <span className="block h-0.5 w-4 bg-ink" />
-                <span className="block h-0.5 w-4 bg-ink" />
-                <span className="block h-0.5 w-4 bg-ink" />
-              </span>
-            </summary>
-            <nav className="absolute right-0 top-12 w-56 rounded-lw border border-line bg-surface p-2 shadow-lg">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block rounded-lg px-3 py-2.5 text-[15px] font-medium text-ink hover:bg-surface-card"
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <a
-                href={SITE_CONFIG.appUrl}
-                className="block rounded-lg px-3 py-2.5 text-[15px] font-medium text-ink hover:bg-surface-card sm:hidden"
-              >
-                Log in
-              </a>
-            </nav>
-          </details>
+          <MobileMenu links={NAV_LINKS} loginHref={SITE_CONFIG.appUrl} />
         </div>
       </div>
     </header>
