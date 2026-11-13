@@ -1,7 +1,7 @@
 export const SITE_CONFIG = {
   name: "Lawrence",
   // The live prototype app. "Log in" and "Start free" both point here.
-  appUrl: "https://lawrence-eidn.vercel.app/",
+  appUrl: "https://lawrence-khaki.vercel.app/sign-in",
   // Custom domain, served from the root of GitHub Pages (see CNAME).
   siteUrl: "https://chat.mach2.cloud",
   // TODO: placeholder until the legal entity is registered.
