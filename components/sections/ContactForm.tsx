@@ -24,17 +24,21 @@ export default function ContactForm() {
     }
 
     const data = new FormData(form);
+    // Keys match what the n8n "FROM" template reads from the webhook body.
+    const payload = {
+      "First Name": String(data.get("firstName") ?? "").trim(),
+      "Last Name": String(data.get("lastName") ?? "").trim(),
+      Company: String(data.get("company") ?? "").trim(),
+      Email: String(data.get("email") ?? "").trim(),
+      Message: String(data.get("message") ?? "").trim(),
+    };
     setStatus("sending");
 
     try {
       const response = await fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          Name: data.get("name"),
-          Email: data.get("email"),
-          Message: data.get("message"),
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -51,17 +55,48 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} className="space-y-5">
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor="firstName" className="text-sm font-medium text-ink">
+            First name
+          </label>
+          <input
+            id="firstName"
+            name="firstName"
+            type="text"
+            autoComplete="given-name"
+            required
+            placeholder="Jane"
+            className={fieldClass}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="lastName" className="text-sm font-medium text-ink">
+            Last name
+          </label>
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            autoComplete="family-name"
+            required
+            placeholder="Doe"
+            className={fieldClass}
+          />
+        </div>
+      </div>
+
       <div>
-        <label htmlFor="name" className="text-sm font-medium text-ink">
-          Name
+        <label htmlFor="company" className="text-sm font-medium text-ink">
+          Company <span className="font-normal text-ink-muted">(optional)</span>
         </label>
         <input
-          id="name"
-          name="name"
+          id="company"
+          name="company"
           type="text"
-          autoComplete="name"
-          required
-          placeholder="Your name"
+          autoComplete="organization"
+          placeholder="Your agency"
           className={fieldClass}
         />
       </div>
